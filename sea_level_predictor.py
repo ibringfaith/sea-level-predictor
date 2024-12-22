@@ -9,26 +9,26 @@ def draw_plot():
     # Create scatter plot
     x = df['Year']
     y = df['CSIRO Adjusted Sea Level']
-    plt.plot(x, y, 'o', label = 'original data')
+    plt.scatter(x, y, color='purple', label = 'Original Data')
 
     # Create first line of best fit
-    res_one = linregress(x, y)
-    prediction_years = list(range(1880, 2051))
-    plt.plot(prediction_years, [res_one.intercept + res_one.slope * year for year in prediction_years], 'r', label='fitted line from 1880')
+    slope, intercept, _, _, _ = linregress(x, y)
+    prediction_years = pd.Series(range(1880, 2051))
+    best_fit = slope * prediction_years + intercept
+    plt.plot(prediction_years, best_fit, label='Best Fit (1880-2050)', color='blue')
 
     # Create second line of best fit
-    df_recent_years = df[df['Year'] >= 2000]
-    x_recent_years = df_recent_years['Year']
-    y_recent_years = df_recent_years['CSIRO Adjusted Sea Level']
-    res_two = linregress(x_recent_years, y_recent_years)
-    prediction_recent_years = list(range(2000, 2051))
-    plt.plot(prediction_recent_years, [res_two.intercept + res_two.slope * year for year in prediction_recent_years], 'b', label='fitted line from 2000')
+    df_recent = df[df['Year'] >= 2000]
+    slope_recent, intercept_recent, _, _, _ = linregress(df_recent['Year'], df_recent['CSIRO Adjusted Sea Level'])
+    years_recent = pd.Series(range(2000, 2051))
+    best_fit_recent = slope_recent * years_recent + intercept_recent
+    plt.plot(years_recent, best_fit_recent, label='Best Fit (2000-2050)', color='red')
 
     # Add labels and title
-    plt.legend()
     plt.xlabel('Year')
     plt.ylabel('Sea Level (inches)')
     plt.title('Rise in Sea Level')
+    plt.legend()
 
     # Save plot and return data for testing (DO NOT MODIFY)
     plt.savefig('sea_level_plot.png')
