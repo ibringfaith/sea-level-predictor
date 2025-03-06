@@ -31,7 +31,7 @@ To set up and run the project, follow these steps:
 ## Example Output
 When executed, the script will generate a scatter plot with a regression line predicting future sea levels. The output might look similar to:
 
-![Sea Level Plot](example_output.png)
+![Sea Level Plot](sea_level_plot.png)
 
 ## Testing
 To test the functionality of the script, run:
